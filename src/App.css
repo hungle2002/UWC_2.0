@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+html, 
+body {
+    height: 100%;
+}
+
+.model {
+    z-index: 99;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.Inform {
+    background-color: #FFF1E7;
+    height: 100%;  
+}
+
+.Inform h2 {
+    padding-top: 5px;
+    font-family: "Raleway";
+    font-weight: 800;
+    text-align: center;
+}
+
+.Inform .Collector {
+    background-color: #FFC097;
+    width: 165px;
+    height: 165px;
+    border-radius: 20pt;
+    border: 2px black solid;
+    float: right;
+    padding: 5px 3px;
+}
+
+.Inform h5 {
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 12px;
+}
+
+.Inform span {
+    font-weight: 700;
+    white-space: pre-wrap;
+}
+
+.Inform ul {
+    list-style-type: none;  
+    float: right;
+    padding: 0;
+}
+
+.Inform h3 {
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 10pt;
+    background-color: hsla(0, 0%, 0%, 0.09);
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.Inform .Route {
+    margin: 25px auto;
+    width: 70%;
+    border: 2px black solid;
+    padding-left: 15px;
+    padding-top: 1%;
+    background-color: #F9E4D7;
+}
+
+.Inform .Route .MCP {
+    margin-left: 0;
+    width: 99%;
+    padding: 6px 6px;
+    border: 2px black solid;
+    border-radius: 10pt;
+    margin-bottom: 10px;
+    background-color: #FFF1E7;
+    color: black;
+}
+
+.Inform button {
+    width: 10%;
+    height: 40px;
+    border-radius: 10pt;
+    color: white;
+    background-color: #3B3B49;
+    font-weight: 700;
+    border: none;
+    float: right;
+}
+
+.Inform button:hover {
+    background-color: black;
+}
+
+.Inform .Xbutton {
+    width: 25px;
+    height: 25px;
+    border-radius: 0;
+    color: black;
+    background: none;
+    font-weight: 500;
+    border: none;
+    float: right;
+}
+
+.Inform .Xbutton:hover {
+    background: #666666;
+}
