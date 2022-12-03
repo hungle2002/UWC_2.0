@@ -247,7 +247,7 @@ const Inform = (props) => {
                     baseURL: 'http://localhost:3500',
                     headers: {'Content-Type': 'application/json'}
                 }).get(
-                    `/allTask/${props.month}/${props.week}`,
+                    `/allTask?month=${props.month}&week=${props.week}`,
                     {
                         signal: controller.signal
                     }
@@ -255,7 +255,6 @@ const Inform = (props) => {
                 isMounted && setInform(resPhong.data);
             } catch (err) {
                 console.error(err);
-                <Navigate to="/" state={{ from: location }} replace />
             }
         }
 
