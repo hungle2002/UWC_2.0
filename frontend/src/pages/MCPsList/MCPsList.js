@@ -17,9 +17,10 @@ const MCPsList = () => {
     ] 
     const {id} = useParams()
     const navigate = useNavigate();
-    const handleJanitorsList = (id) => {
+    const handleJanitorsList = (id, index) => {
         const url = `/mcp/${id}`
-        navigate(url, {state:{info:mcps[id]}})
+        console.log(mcps)
+        navigate(url, {state:{info:mcps[index]}})
     }
 
     useEffect(() => {
@@ -79,7 +80,7 @@ const MCPsList = () => {
                         <tbody>
                             {
                                 mcps?.map((mcp, index) => (
-                                    <tr key={index} className="link" onClick={() => handleJanitorsList(index)}>
+                                    <tr key={index} className="link" onClick={() => {mcp.janiator.split('/')[0] === mcp.janiator.split('/')[1] ? void(0) : handleJanitorsList(mcp.mcpID, index) }}>
                                         {
                                             mcp.janiator.split('/')[0] === mcp.janiator.split('/')[1] ?
                                             <td><img src={require('../../img/checkcircle.png')}/></td> :

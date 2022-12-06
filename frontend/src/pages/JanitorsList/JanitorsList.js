@@ -26,13 +26,12 @@ const Confirm = (props) => {
     const choices = props.janitors.filter(janitor => janitor?.isChecked)
     const handleSubmit = async () => {
         const ids = choices.map(choice => choice.userID)
-        console.log(ids)
         setConfirm(true)
         const res = await axios.post("http://localhost:3000/api/mcp", 
-            {"mcpId": id, "janiatorId": ids, "month":12, "week": 11}
+            {"mcpId": parseInt(id), "janiatorId": ids, "month":12, "week": 11}
         )
         .then((res) => {
-
+            console.log(res)
         })
         .catch((err) =>
             alert("failed")
@@ -93,7 +92,8 @@ const JanitorsList = (props) => {
         {id: 'phone', label: "Số điện thoại"},
     ] 
 
-    const max = location.state.info.janiator.split('/')[1];
+    const [need, max] = location.state.info.janiator.split('/');
+    console.log(need, max)
     const [page, setPage] = useState(0)
     const [filter, setFilter] = useState("Tất cả")
     const [search, setSearch] = useState("")
@@ -117,7 +117,7 @@ const JanitorsList = (props) => {
         let janitorsSelection = janitors.map((janitor) =>
             janitor.userID == name ? {...janitor, isChecked: checked} : janitor
         )
-        numbers >= max && checked ? setShowAlert(`Chọn tối đa ${max} janitors`) : setJanitors(janitorsSelection);
+        numbers >= (max-need) && checked ? setShowAlert(`Max là ${max} janitors`) : setJanitors(janitorsSelection);
     }
 
     return (
