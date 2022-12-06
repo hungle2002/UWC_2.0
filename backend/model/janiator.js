@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getJaniatorById = exports.getUnassignedJan = void 0;
+exports.getAssignedJanByMcpId = exports.getJaniatorById = exports.getUnassignedJan = void 0;
 //get all unassigned janiator in thang x tuan y
 var data = require("./data");
 function getUnassignedJan(month, week) {
@@ -31,3 +31,19 @@ function getJaniatorById(id) {
     return res;
 }
 exports.getJaniatorById = getJaniatorById;
+function getAssignedJanByMcpId(mcpId, month, week) {
+    var assignedJan = [];
+    var tmpId = [];
+    data.JaniatorTaskList.forEach(function (task) {
+        if (task.month === month && task.week == week && task.mcpID === mcpId) {
+            tmpId.push(task.janiatorID);
+        }
+    });
+    data.JaniatorList.forEach(function (janiator) {
+        if (tmpId.includes(janiator.userID)) {
+            assignedJan.push(janiator);
+        }
+    });
+    return assignedJan;
+}
+exports.getAssignedJanByMcpId = getAssignedJanByMcpId;

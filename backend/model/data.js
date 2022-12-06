@@ -11,18 +11,18 @@ var RouteList = [
 exports.RouteList = RouteList;
 //represent mcp table
 var MCPList = [
-    new model_1.MCP(1, "testLocation1", 1, 4),
-    new model_1.MCP(2, "testLocation2", 1, 4),
-    new model_1.MCP(3, "testLocation3", 1, 4),
-    new model_1.MCP(4, "testLocation4", 1, 4),
-    new model_1.MCP(5, "testLocation5", 2, 4),
-    new model_1.MCP(6, "testLocation6", 2, 4),
-    new model_1.MCP(7, "testLocation7", 2, 4),
-    new model_1.MCP(8, "testLocation8", 2, 4),
-    new model_1.MCP(9, "testLocation9", 3, 4),
-    new model_1.MCP(10, "testLocation10", 3, 4),
-    new model_1.MCP(11, "testLocation11", 3, 4),
-    new model_1.MCP(12, "testLocation12", 3, 4),
+    new model_1.MCP(1, "Lc1", 1, 4),
+    new model_1.MCP(2, "Lc2", 1, 4),
+    new model_1.MCP(3, "Lc3", 1, 4),
+    new model_1.MCP(4, "Lc4", 1, 4),
+    new model_1.MCP(5, "Lc5", 2, 3),
+    new model_1.MCP(6, "Lc6", 2, 3),
+    new model_1.MCP(7, "Lc7", 2, 3),
+    new model_1.MCP(8, "Lc8", 3, 3),
+    new model_1.MCP(9, "Lc9", 3, 3),
+    new model_1.MCP(10, "Lc10", 3, 3),
+    new model_1.MCP(11, "Lc11", 4, 2),
+    new model_1.MCP(12, "Lc12", 4, 2),
 ];
 exports.MCPList = MCPList;
 //represent vehicle table
@@ -74,6 +74,26 @@ var JaniatorList = [
     new model_1.Janiator(17, model_1.Shift.Morning),
     new model_1.Janiator(18, model_1.Shift.Afternoon),
     new model_1.Janiator(19, model_1.Shift.Evening),
+    new model_1.Janiator(20, model_1.Shift.Morning),
+    new model_1.Janiator(21, model_1.Shift.Morning),
+    new model_1.Janiator(22, model_1.Shift.Afternoon),
+    new model_1.Janiator(23, model_1.Shift.Evening),
+    new model_1.Janiator(24, model_1.Shift.Morning),
+    new model_1.Janiator(25, model_1.Shift.Afternoon),
+    new model_1.Janiator(26, model_1.Shift.Evening),
+    new model_1.Janiator(27, model_1.Shift.Morning),
+    new model_1.Janiator(28, model_1.Shift.Afternoon),
+    new model_1.Janiator(29, model_1.Shift.Evening),
+    new model_1.Janiator(30, model_1.Shift.Morning),
+    new model_1.Janiator(31, model_1.Shift.Morning),
+    new model_1.Janiator(32, model_1.Shift.Afternoon),
+    new model_1.Janiator(33, model_1.Shift.Evening),
+    new model_1.Janiator(34, model_1.Shift.Morning),
+    new model_1.Janiator(35, model_1.Shift.Afternoon),
+    new model_1.Janiator(36, model_1.Shift.Evening),
+    new model_1.Janiator(37, model_1.Shift.Morning),
+    new model_1.Janiator(38, model_1.Shift.Afternoon),
+    new model_1.Janiator(39, model_1.Shift.Evening),
 ];
 exports.JaniatorList = JaniatorList;
 //represend Collector Task table
