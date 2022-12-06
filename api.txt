@@ -1,0 +1,73 @@
+- route
+get('/api/route?week=11&month=12') => all
+get('/api/route?name=vidu&week=11&month=12') => find by name
+
+return list[{
+        routeName: name,
+        colName: name,
+        vecName: name,
+        MCP: [1/3]
+      }]
+
+- collector
+get('/api/collector?week=11&month=12') => all
+get('/api/collector?name=vidu&week=11&month=12') => find by name
+return list[{
+    userID: string
+    userName: string
+    phone:string
+    workTime: string
+    workDay: string
+}]
+
+- vehicle
+get('/api/vehicle?week=11&month=12') => all
+return [{vehicleID: string
+         vehicleName: string
+         capacity:string
+	   plate:string
+	 }]
+- mcp
+get('/api/mcp?route_id=id&week=11&month=12') => all mcp
+return [{mcpID:mcp.mcpID,
+        mcpName:"mcp "+String(mcp.mcpID),
+        address:mcp.location,
+        janiator:String(countMCPWorker(mcp.mcpID,month,week))+"/"+String(mcp.workerCount)
+       }]
+- janiator
+get('/api/janiator?week=11&month=12') => all mcp
+return [{userID: string
+    	   userName: string = "testName"
+         phone: string = "0000000000"
+         workTime: Shift
+         workDay: string
+       }]
+
+=> post('/api/mcp')
+body{
+	mcpId : mcpID,
+	janiatorId : [janiatorId1, janiatorId2, janiatorId3, ......],
+ 	month:number,
+ 	week:number
+}
+
+- all task
+get('/allTask?month=1&week'=1)
+
+==> POST for route + colector + vehicle
+post('/api/route')
+body:
+{	route_id: route_id,
+	collector_id: collecotr_id,
+	vehicle_id: vehicle_id,
+	month : month,
+	week: week
+}
+
+
+
+
+
+
+
+
