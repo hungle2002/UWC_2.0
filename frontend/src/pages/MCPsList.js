@@ -5,11 +5,72 @@ import axios from 'axios';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useNavigate, useParams } from "react-router-dom";
 import {Button} from 'react-bootstrap/'
+import Modal from 'react-bootstrap/Modal';
+
+const JanitorsAssigned = (props) => {
+    const navigate = useNavigate();
+    const [list, setList] = useState([])
+    const theads = [
+        {id: 'userID', label: "MSNV"}, 
+        {id: 'userName', label: "Họ và tên"}, 
+        {id: 'workDay', label: "Ca làm việc"},
+        {id: 'workTime', label: "Lịch làm việc"} 
+    ] 
+    
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/janiator/mcp?week=11&month=12&mcpId=${props.info.mcpID}`)
+        .then((res) => {
+            setList(res.data)
+        })
+    }, [])
+    
+    const handleClick = () => {
+        const url = `/mcp/${props.info.mcpID}`
+        navigate(url, {state:{info:props.info, assigned:list}})
+    }
+    
+    return(
+    <Modal centered show={true} onHide={props.onHide}>
+      <Modal.Header style={{flexDirection: 'column'}}>
+        <Modal.Title className="text-center header-text">Các thông tin đã chọn</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h6>Thông tin MCP</h6>
+        <div className='mcp-info'>
+            <h6>Tuyến đường: TD/LT</h6>
+            <h6>Địa chỉ: {props.info.address}</h6>
+        </div>
+        <div style={{maxHeight: '450px'}} className="list">
+            <Table className="select-list">
+                <tbody>
+                    {
+                        list.map((choice, index) => (
+                            <tr key={index}>
+                                    {
+                                        theads.map((thead, index) => (
+                                            <td key={index}>{choice[thead.id]}</td>
+                                        ))
+                                    }
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </Table>
+        </div>
+        <div className="d-flex justify-content-center">
+            <Button variant="dark" style={{marginRight: '5px'}} onClick={handleClick}>Chỉnh sửa</Button>
+            <Button variant="dark" onClick={props.onHide}>Xác nhận</Button>
+        </div>
+      </Modal.Body>
+    </Modal>
+    )
+}
 
 const MCPsList = () => {
     const [viewport, setViewport] = useState({})
     const [mcps, setMcps] = useState([])
     const [markers, setMarkers] = useState([])
+    const [openList, setOpenList] = useState([])
     const theads = [
         {id: 'id', label: "MCP"}, 
         {id: 'address', label: "Địa chỉ"}, 
@@ -17,11 +78,6 @@ const MCPsList = () => {
     ] 
     const {id} = useParams()
     const navigate = useNavigate();
-    const handleJanitorsList = (id, index) => {
-        const url = `/mcp/${id}`
-        console.log(mcps)
-        navigate(url, {state:{info:mcps[index]}})
-    }
 
     useEffect(() => {
         let adds = []
@@ -45,6 +101,12 @@ const MCPsList = () => {
         })
        
     }, [])
+
+    const handleJanitorsList = (id, index) => {
+        const url = `/mcp/${id}`
+        console.log(mcps)
+        navigate(url, {state:{info:mcps[index]}})
+    }
 
     return (
         <div className="container-fluid" style={{height: "100vh"}}>
@@ -80,11 +142,11 @@ const MCPsList = () => {
                         <tbody>
                             {
                                 mcps?.map((mcp, index) => (
-                                    <tr key={index} className="link" onClick={() => {mcp.janiator.split('/')[0] === mcp.janiator.split('/')[1] ? void(0) : handleJanitorsList(mcp.mcpID, index) }}>
+                                    <tr key={index} className="link" onClick={() => {mcp.janiator.split('/')[0] !== '0' ? setOpenList(mcps[index]) : handleJanitorsList(mcp.mcpID, index) }}>
                                         {
                                             mcp.janiator.split('/')[0] === mcp.janiator.split('/')[1] ?
-                                            <td><img src={require('../../img/checkcircle.png')}/></td> :
-                                            <td><img src={require('../../img/crosscircle.png')}/></td>
+                                            <td><img src={require('../img/checkcircle.png')}/></td> :
+                                            <td><img src={require('../img/crosscircle.png')}/></td>
                                         }
                                         <td>{mcp.mcpID}</td>
                                         <td>{mcp.address}</td>
@@ -98,6 +160,7 @@ const MCPsList = () => {
                     <Button variant="dark" onClick={() => navigate(-1)} style={{float: 'right'}}>Quay về</Button>
                 </div>
             </div>   
+            {openList.length !== 0 && <JanitorsAssigned onHide={()=>setOpenList([])} info={openList}></JanitorsAssigned>}
         </div>
     )
 }

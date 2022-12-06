@@ -1,5 +1,5 @@
-import JanitorsList from './pages/JanitorsList/JanitorsList'
-import MCPsList from './pages/MCPsList/MCPsList'
+import JanitorsList from './pages/JanitorsList'
+import MCPsList from './pages/MCPsList'
 import {Routes, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
