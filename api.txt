@@ -43,6 +43,16 @@ return [{userID: string
          workDay: string
        }]
 
+get('/api/janiator/mcp?week=1&month=1&mcpId=1') => assigned janiator
+return [   {
+        "phone": "0000000000",
+        "workDay": "T2-T6",
+        "userID": 1,
+        "workTime": "Sang",
+        "workingArea": "testJaniatorArea",
+        "userName": "testJaniatorName1"
+    },]
+
 => post('/api/mcp')
 body{
 	mcpId : mcpID,
