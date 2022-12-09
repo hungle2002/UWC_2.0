@@ -58,3 +58,50 @@ code {
 .link {
   cursor: pointer;
 }
+
+/*modal*/
+.header-text {
+  font-style: normal;
+  font-weight: 800 !important;
+  font-size: 36px;
+  line-height: 42px;
+  color: #3B3B49;
+  text-align: center;
+}
+
+.mcp-info {
+  display: flex;
+  justify-content: space-between;
+  font-style: normal;
+  line-height: 28px;
+  margin-bottom: 0.5rem;
+  color: #3B3B49;
+}
+
+.select-info {
+  display: flex;
+}
+
+.select-info select {
+  width: 100px;
+}
+
+.select-list {
+  background-color: rgba(0, 0, 0, 0.09);
+  padding: var(--bs-modal-padding);}
+
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-left: calc(var(--bs-modal-padding) * -1);
+  width: calc(100% + var(--bs-modal-padding) * 2) !important;
+  margin-bottom: 1rem;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.list > table {
+  margin-bottom: 0 !important;
+}

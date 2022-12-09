@@ -1,6 +1,5 @@
-import './JanitorsList.css'
 import Table from 'react-bootstrap/Table';
-import {Tabligation} from '../../components/Table/Table'
+import {Tabligation} from '../components/Table/Table'
 import {Button} from 'react-bootstrap/'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal';
@@ -27,7 +26,7 @@ const Confirm = (props) => {
     const handleSubmit = async () => {
         const ids = choices.map(choice => choice.userID)
         setConfirm(true)
-        const res = await axios.post("http://localhost:3000/api/mcp", 
+        await axios.post("http://localhost:3000/api/mcp", 
             {"mcpId": parseInt(id), "janiatorId": ids, "month":12, "week": 11}
         )
         .then((res) => {
@@ -40,7 +39,7 @@ const Confirm = (props) => {
     return(
     <Modal centered show={true} onHide={props.onHide}>
       <Modal.Header style={{flexDirection: 'column'}}>
-        {confirm && <img src={require('../../img/checkcircle.png')} style={{width: '60px'}}/>}
+        {confirm && <img src={require('../img/checkcircle.png')} style={{width: '60px'}}/>}
         {!confirm ? <Modal.Title className="text-center header-text">Các thông tin đã chọn</Modal.Title> : <Modal.Title className="text-center header-text">Lưu thành công</Modal.Title>}
       </Modal.Header>
       <Modal.Body>
@@ -49,24 +48,26 @@ const Confirm = (props) => {
             <h6>Tuyến đường: TD/LT</h6>
             <h6>Địa chỉ: {props.address}</h6>
         </div>
-        <Table className="select-list">
-            <tbody>
-                {
-                    choices.map((choice, index) => (
-                        <tr key={index}>
-                                {
-                                    theads.map((thead, index) => (
-                                        <td key={index}>{choice[thead.id]}</td>
-                                    ))
-                                }
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </Table>
+        <div style={{maxHeight: '450px'}} className="list">
+            <Table className="select-list">
+                <tbody>
+                    {
+                        choices.map((choice, index) => (
+                            <tr key={index}>
+                                    {
+                                        theads.map((thead, index) => (
+                                            <td key={index}>{choice[thead.id]}</td>
+                                        ))
+                                    }
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </Table>
+        </div>
         <div className="d-flex justify-content-center">
             {!confirm ? <><Button variant="dark" style={{marginRight: '5px'}} onClick={handleSubmit}>Xác nhận</Button><Button variant="dark" onClick={props.onHide}>Hủy bỏ</Button></> :
-            <Button variant="dark" onClick={() => navigate(-1)}>Tiếp tục</Button>}
+            <><Button variant="dark" onClick={() => navigate(-1)} style={{marginRight: '5px'}}>Tiếp tục mcp khác</Button><Button variant="dark" onClick={props.onHide}>Chỉnh sửa</Button></>}
         </div>
       </Modal.Body>
     </Modal>
@@ -75,15 +76,15 @@ const Confirm = (props) => {
 const JanitorsList = (props) => {
     const [janitors, setJanitors] = useState([]);
     const navigate = useNavigate();
-    useEffect(() => {
-        axios.get(`http://localhost:3000/api/janiator?week=11&month=12`)
-        .then((res) => {
-            setJanitors(res.data)
-        }
-        )
-       
-    }, [])
     const location = useLocation()
+    location.state.assigned?.forEach((janitor) => janitor.isChecked = true)
+    const [page, setPage] = useState(0)
+    const [filter, setFilter] = useState("Tất cả")
+    const [search, setSearch] = useState("")
+    const [openConfirm, setOpenConfirm] = useState("")
+    const [showAlert, setShowAlert] = useState("")
+    const max = location.state.info.janiator.split('/')[1];
+    
     const theads = [
         {id: 'userID', label: "MSNV"}, 
         {id: 'userName', label: "Họ và tên"}, 
@@ -92,32 +93,32 @@ const JanitorsList = (props) => {
         {id: 'phone', label: "Số điện thoại"},
     ] 
 
-    const [need, max] = location.state.info.janiator.split('/');
-    console.log(need, max)
-    const [page, setPage] = useState(0)
-    const [filter, setFilter] = useState("Tất cả")
-    const [search, setSearch] = useState("")
-    const [openConfirm, setOpenConfirm] = useState("")
-    const [showAlert, setShowAlert] = useState("")
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/janiator?week=11&month=12`)
+        .then((res) => {
+            if (location.state.assigned) setJanitors([...location.state?.assigned , ...res.data])
+            else setJanitors(res.data)
+        })
+    }, [])
+    
+    const numbers = janitors.filter((janitor) => janitor.isChecked === true).length
     //const [select, setSelect] = useState(janitors.reduce((o, janitor) => { return {...o, [janitor.userID]: false}}, {}))
-
     
     showAlert ? setTimeout(() => {setShowAlert("");}, 5000) : void(0)
     const table = janitors.filter(janitor => filter === "Tất cả" || janitor.workTime === filter ? true : false)
     //const numbers = Object.keys(Object.fromEntries(Object.entries(select).filter(([key, val]) => val === true))).length
-    const numbers = janitors.filter((janitor) => janitor.isChecked).length
-    
     const handleSubmit = () => {
-        numbers !== 0 ? setOpenConfirm() : setShowAlert("Hãy chọn ít nhất 1 janitor nhé!")
+        numbers !== 0 ? setOpenConfirm() : setShowAlert("Hãy chọn ít nhất 1 janitor!")
     }
 
     const handleSelect = (e) => {
         const {name, checked} = e.target
-        console.log(name, checked, e.target)
+        
         let janitorsSelection = janitors.map((janitor) =>
             janitor.userID == name ? {...janitor, isChecked: checked} : janitor
         )
-        numbers >= (max-need) && checked ? setShowAlert(`Max là ${max} janitors`) : setJanitors(janitorsSelection);
+        numbers >= max && checked ? setShowAlert(`Max là ${max} janitors`) : setJanitors(janitorsSelection);
+       
     }
 
     return (
@@ -178,7 +179,7 @@ const JanitorsList = (props) => {
                 <Button variant="dark" onClick={handleSubmit}>Lưu thay đổi</Button>
                 <Tabligation count={table.length} page={page} rowsPerPage={10} onPageChange={(newPage) => setPage(newPage)}></Tabligation>
             </div>
-            {openConfirm !== "" && <Confirm onHide={()=>setOpenConfirm("")} janitors={janitors} address={location.state.info.address}></Confirm>}
+            {openConfirm !== "" && <Confirm onHide={()=>setOpenConfirm("")} janitors={janitors} address={location.state.info.address} max={max}></Confirm>}
             {showAlert !== "" && <Alert variant="danger">{showAlert}</Alert>}
         </div>      
         </>
