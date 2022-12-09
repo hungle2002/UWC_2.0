@@ -2,6 +2,8 @@ import { useState, useEffect} from 'react'
 import { api } from '../data/api'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRouteUpdate } from '../hooks/useRouteUpdate'
+import { useRoutes } from '../hooks/useRoutes'
+import { useSelectedVehicleId } from '../hooks/useSelectedVehicleId'
 import SearchBar from '../components/SeachBar'
 import VehicleTable from '../components/VehicleTable'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -9,9 +11,11 @@ import './VehicleSelection.css'
 
 const VehicleSelection = () => {
   const navigate = useNavigate()
-  const { route } = useParams()
+  const { route : routeId } = useParams()
   const [vehicles, setVehicles] = useState()
   const [selected, setSelected] = useState(-1)
+  const { selectedIds, updateSelectedIds } = useSelectedVehicleId()
+  const routes = useRoutes()
   const  updateRoute  = useRouteUpdate()
   function checkItem(e, i) {
       if(e.target.checked) {
@@ -23,9 +27,19 @@ const VehicleSelection = () => {
   }
 
   function updateVehicle() {
-    let selectedVehicle = vehicles[selected]
-    updateRoute(route, "vecName", selectedVehicle.vehicleName)
-
+    let selectedVehicle = vehicles.find(vehicle => vehicle.vehicleID === selected)
+    // check if this route did contain a selected vehicle
+    // if yes, remove it from selected list to be available for selection
+    const currentRoute = routes.find(route => route.routeIO === parseInt(routeId))
+    const hasSelected = Object.keys(currentRoute).includes("vecId")
+    if(hasSelected) {
+      const prevSelectedId = currentRoute.vecId
+      updateSelectedIds(prevSelectedId, selectedVehicle.vehicleID)
+    } else{
+      updateSelectedIds(-1, selectedVehicle.vehicleID)
+    }
+    updateRoute(routeId, {vecName: selectedVehicle.vehicleName, vecId: selectedVehicle.vehicleID})
+    navigate(-1)
   }
 
   useEffect(() => {
@@ -45,7 +59,13 @@ const VehicleSelection = () => {
         </div>
 
         <SearchBar placeHolder='Tìm kiếm phương tiện'/>
-        <VehicleTable vehicles={vehicles} selected={selected} checkItem={checkItem}/>
+        <VehicleTable 
+          vehicles={vehicles?.filter(vehicle => {
+            return !selectedIds.includes(vehicle.vehicleID)
+          })} 
+          selected={selected} 
+          checkItem={checkItem}
+        />
         <button 
             className='submit' 
             style={{marginTop: "10px"}}

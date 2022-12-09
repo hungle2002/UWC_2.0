@@ -1,6 +1,7 @@
 import SeachBar from '../components/SeachBar'
 import WeekSummary from '../components/WeekSummary'
 import { useRoutes } from '../hooks/useRoutes'
+import { useNavigate } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import RouteTable from '../components/RouteTable'
 
@@ -10,7 +11,12 @@ const options = ['Phân loại','Đã hoàn thành', 'Chưa hoàn thành', 'Chư
 
 
 const WeekPage = () => {
+    const navigate = useNavigate()
     const routes = useRoutes()
+
+    function handleRouteSubmit() {
+        navigate('inform')
+    }
 
     return(
         <div>
@@ -24,7 +30,10 @@ const WeekPage = () => {
                 </Form.Select>
             </div>
             <RouteTable routes={routes} />
-            <button className='submit' style={{marginTop: "10px"}}>
+            <button 
+                onClick={() => {handleRouteSubmit()}}
+                className='submit' 
+                style={{marginTop: "10px"}}>
                 Gửi thông báo
             </button>
         </div>

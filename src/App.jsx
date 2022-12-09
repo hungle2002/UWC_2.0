@@ -7,6 +7,7 @@ import CollectorSelection from './pages/CollectorSelection'
 import VehicleSelection from './pages/VehicleSelection'
 import MCPSelection from './pages/MCPSelection'
 import JanitorSelection from './pages/JanitorSelection'
+import Inform from './pages/Inform'
 
 function App() {
   const navigate = useNavigate()
@@ -19,10 +20,11 @@ function App() {
       <div className='main-layout'>
         <Routes>
             <Route path='/:week' element={<WeekSelect />} />
+            <Route path='/:week/inform' element={<Inform />} />
             <Route path='/:week/:route/collector' element={<CollectorSelection /> } />
             <Route path='/:week/:route/vehicle' element={<VehicleSelection /> } />
             <Route path='/:week/:route/mcp' element={<MCPSelection /> } />
-            <Route path='/:week/:route/:mcp/janitor' element={<JanitorSelection /> } />
+            <Route path='/:week/:route/mcp/:id/janitor' element={<JanitorSelection /> } />
 
         </Routes>
       </div>

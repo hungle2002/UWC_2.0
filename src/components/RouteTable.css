@@ -30,6 +30,17 @@ td:last-child{
     border-radius: 0 5px 5px 0;
 }
 
-.route-table td:hover{
+.route-table td.red{
     color: red;
+}
+
+.route-table td:nth-child(2),
+.route-table td:nth-child(3),
+.route-table td:nth-child(4) {
+    cursor: pointer;
+}
+
+.complete-icon{
+    font-size: 20px;
+    color: rgb(147, 250, 165);
 }

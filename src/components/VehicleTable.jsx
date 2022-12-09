@@ -17,9 +17,9 @@ const VehicleTable = ({vehicles, selected, checkItem}) => {
                 </tr>
             </thead>
             <tbody>
-                {vehicles?.map((vehicle, i) => {
+                {vehicles?.map((vehicle) => {
                     return(
-                    <tr key={i}>
+                    <tr key={vehicle.vehicleID}>
                         <td>{vehicle.vehicleID}</td>
                         <td>{vehicle.vehicleName}</td>
                         <td>{vehicle.capacity}</td>
@@ -28,8 +28,8 @@ const VehicleTable = ({vehicles, selected, checkItem}) => {
                             <input 
                                 className='checkbox' 
                                 type='checkbox' 
-                                checked={i === selected ? true : false}
-                                onChange={(e)=>checkItem(e, i)}
+                                checked={vehicle.vehicleID === selected ? true : false}
+                                onChange={(e)=>checkItem(e, vehicle.vehicleID)}
                             />
                         </td>
                     </tr>

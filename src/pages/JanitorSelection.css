@@ -1,0 +1,159 @@
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.mcp-info .overview{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 800px;
+    margin-block: 15px;
+}
+
+.select-info{
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    margin-block: 15px
+}
+
+.janitor-search{
+    height: 30px;
+    max-width: 400px;
+}
+
+.back-btn{
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    left: 10px;
+}
+
+.back-btn:hover{
+    background-color: gray;
+}
+
+h1{
+    font-size: 20px;
+}
+h6{
+    font-size: 15px;
+}
+  
+.modal-background{
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: rgba(189,195,199,0.5);
+
+}
+
+
+
+
+.modal{
+    z-index: 1000;
+    width: 100%;
+}
+
+.modal-header {
+    border-bottom: 0;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: rgba(255, 241, 231, 1);
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 650px;
+    padding: 10px;
+    transform: translateX(150px);
+    
+}
+
+.modal-body{
+    width: 100%;
+}
+
+.alert {
+    width: fit-content;
+    top: 20px;
+    right: 0px;
+    position: fixed;
+}
+
+.link {
+    cursor: pointer;
+}
+
+/*modal*/
+.header-text {
+    font-style: normal;
+    font-weight: 800 !important;
+    font-size: 36px;
+    line-height: 42px;
+    color: #3B3B49;
+    text-align: center;
+}
+
+.mcp-info {
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+    line-height: 28px;
+    margin-bottom: 0.5rem;
+    color: #3B3B49;
+}
+
+
+.select-info select {
+    width: 100px;
+}
+
+.select-list {
+    flex: 1;
+}
+
+.list {
+    background-color: rgba(0, 0, 0, 0.09);  
+    display: flex;
+    padding-inline: 50px;
+    overflow-y:auto;
+    margin-left: calc(var(--bs-modal-padding) * -1);
+    width: 100% !important;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.list > table {
+    margin-bottom: 0 !important;
+}
+
+.back-btn{
+    z-index: 20;
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    left: 10px;
+}
+
+.back-btn:hover{
+    background-color: gray;
+}

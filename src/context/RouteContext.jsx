@@ -8,9 +8,9 @@ export const RouteUpdateContext = createContext()
 const RouteProvider = ({children}) => {
     const [routes, setRoutes] = useState()
 
-    function updateRoute(routeId, updateEntry, updateValue) {
+    function updateRoute(routeId, updateAttributes) {
         const updatedRoutes = routes?.map(route => {
-            return route.routeIO === parseInt(routeId) ? {...route, [updateEntry]: updateValue} : route
+            return route.routeIO === parseInt(routeId) ? {...route, ...updateAttributes} : route
         })
         setRoutes(updatedRoutes)
     }

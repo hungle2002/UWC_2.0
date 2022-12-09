@@ -4,7 +4,6 @@ import './CollectorTable.css'
 
 
 const CollectorTable = ({collectors, selected, checkItem}) => {
-
     return(
         <table className="collector-table">
             <thead>
@@ -17,9 +16,9 @@ const CollectorTable = ({collectors, selected, checkItem}) => {
                 </tr>
             </thead>
             <tbody>
-                {collectors?.map((collector, i) => {
+                {collectors?.map((collector) => {
                     return(
-                    <tr key={i}>
+                    <tr key={collector.userID}>
                         <td>{collector.userName}</td>
                         <td>{collector.workDay}</td>
                         <td>{collector.workTime}</td>
@@ -28,8 +27,8 @@ const CollectorTable = ({collectors, selected, checkItem}) => {
                             <input 
                                 className='checkbox' 
                                 type='checkbox' 
-                                checked={i === selected ? true : false}
-                                onChange={(e)=>checkItem(e, i)}    
+                                checked={collector.userID === selected ? true : false}
+                                onChange={(e)=>checkItem(e, collector.userID)}    
                             />  
                         </td>
                     </tr>
