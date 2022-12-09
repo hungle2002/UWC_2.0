@@ -18,6 +18,8 @@ const routeTask = require("./routes/task");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(body_parser.json())
+
 app.use("/api/route", routeRoute);
 app.use("/api/collector", routeCollector);
 app.use("/api/janiator", routeJaniator);

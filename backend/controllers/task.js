@@ -34,6 +34,7 @@ const getAllTask = async (req, res, next) => {
         "name":assignedMcp.location,
         "janiators": janiators
       })
+      janiators=[];
     })
 
     result.push({
