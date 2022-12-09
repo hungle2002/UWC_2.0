@@ -12,12 +12,22 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CollectorSelection = () => {
   const navigate = useNavigate()
+  const routes = useRoutes()
   const { route : routeId} = useParams()
+  const { selectedIds, updateSelectedIds } = useSelectedCollectorId()
+  const [name, setName] = useState('')
   const [collectors, setCollectors] = useState()
   const [selected, setSelected] = useState(-1)
-  const routes = useRoutes()
   const updateRoute = useRouteUpdate()
-  const { selectedIds, updateSelectedIds } = useSelectedCollectorId()
+
+  let filterCollectors = collectors?.filter(collector => {
+    return !selectedIds.includes(collector.userID)
+  })
+  
+  if(name!="") {
+    filterCollectors = filterCollectors.filter(collector=>collector.userName.toLowerCase().includes(name.toLowerCase()))
+  }
+
 
   function checkItem(e, i) {
       if(e.target.checked) {
@@ -57,20 +67,16 @@ const CollectorSelection = () => {
     <>
         <ArrowBackIcon className='back-btn'onClick={() => navigate(-1)}/>
         <h1>DANH SÁCH CÁC TÀI XẾ</h1>
-        <div>
-            <div>Tuyến đường</div>
-            <div>Địa chỉ</div>
-        </div>
 
-        <SearchBar placeHolder='Tìm kiếm tài xế theo tên'/>
+        <SearchBar 
+          placeHolder='Tìm kiếm tài xế theo tên'
+          onSearch={setName}
+        />
         <CollectorTable 
-          collectors={collectors?.filter(collector => {
-            return !selectedIds.includes(collector.userID)
-          })} 
+          collectors={filterCollectors} 
           selected={selected} 
           checkItem={checkItem} 
-        />
-        <button           
+        />        <button           
           className='submit' 
           style={{marginTop: "10px"}}
           disabled={selected === -1 ? true : false}

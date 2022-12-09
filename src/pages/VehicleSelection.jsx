@@ -14,9 +14,20 @@ const VehicleSelection = () => {
   const { route : routeId } = useParams()
   const [vehicles, setVehicles] = useState()
   const [selected, setSelected] = useState(-1)
+  const [name, setName ] = useState('')
   const { selectedIds, updateSelectedIds } = useSelectedVehicleId()
   const routes = useRoutes()
-  const  updateRoute  = useRouteUpdate()
+  const updateRoute  = useRouteUpdate()
+
+  let filterVehicles = vehicles?.filter(vehicle => {
+    return !selectedIds.includes(vehicle.vehicleID)
+  })
+
+  if(name!="") {
+    filterVehicles = filterVehicles.filter(vehicle=>vehicle.vehicleName.toLowerCase().includes(name.toLowerCase()))
+  }
+
+
   function checkItem(e, i) {
       if(e.target.checked) {
           setSelected(i)
@@ -53,16 +64,13 @@ const VehicleSelection = () => {
     <>
         <ArrowBackIcon className='back-btn'onClick={() => navigate(-1)}/>
         <h1>DANH SÁCH PHƯƠNG TIỆN</h1>
-        <div>
-            <div>Tuyến đường</div>
-            <div>Địa chỉ</div>
-        </div>
 
-        <SearchBar placeHolder='Tìm kiếm phương tiện'/>
+        <SearchBar 
+          placeHolder='Tìm kiếm phương tiện'
+          onSearch={setName}
+        />
         <VehicleTable 
-          vehicles={vehicles?.filter(vehicle => {
-            return !selectedIds.includes(vehicle.vehicleID)
-          })} 
+          vehicles={filterVehicles} 
           selected={selected} 
           checkItem={checkItem}
         />

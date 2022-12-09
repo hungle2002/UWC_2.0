@@ -36,6 +36,7 @@
 }
 
 .Inform {
+    overflow-y:scroll;
     background-color: #FFF1E7;
     width: 100%;
     max-width: 1200px;

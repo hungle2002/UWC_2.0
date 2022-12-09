@@ -1,43 +1,55 @@
 import SeachBar from '../components/SeachBar'
 import WeekSummary from '../components/WeekSummary'
 import { useRoutes } from '../hooks/useRoutes'
-import { useNavigate } from 'react-router-dom'
-import Form from 'react-bootstrap/Form'
+import { useState } from 'react'
 import RouteTable from '../components/RouteTable'
-
+import { useNavigate } from 'react-router-dom'
 import './WeekPage.css'
 
-const options = ['Phân loại','Đã hoàn thành', 'Chưa hoàn thành', 'Chưa phân công tài xế', 'Chưa phân công phương tiện']
 
 
 const WeekPage = () => {
     const navigate = useNavigate()
-    const routes = useRoutes()
+    const [name,setName]=useState('')
+    let routes = useRoutes()
+    if(name!=''){
+        routes=routes.filter(route=>route.routeName.toLowerCase().includes(name.toLowerCase()))
+    }
 
-    function handleRouteSubmit() {
-        navigate('inform')
+    
+    function handleRouteSubmit(routes) {
+        const hasCompleteRoute = routes.some(route => isCompleteRoute(route))
+        if(hasCompleteRoute) {
+            navigate('inform')
+        } else{
+            alert('Vui lòng hoàn thành phân công ít nhất một tuyến đường trước khi gửi thông báo')
+        }
     }
 
     return(
         <div>
             <WeekSummary />
             <div className='seach-filter'>
-                <SeachBar placeHolder={'tìm kiếm theo tuyến đường'}/>
-                <Form.Select>   
-                    {options.map((option, i) => {
-                        return <option key={i} value={option}>{option}</option>
-                    })}
-                </Form.Select>
+                <SeachBar 
+                    placeHolder={'tìm kiếm theo tuyến đường'}
+                    onSearch={setName}
+                />
             </div>
             <RouteTable routes={routes} />
             <button 
-                onClick={() => {handleRouteSubmit()}}
+                onClick={() => {handleRouteSubmit(routes)}}
                 className='submit' 
-                style={{marginTop: "10px"}}>
+                style={{marginTop: "10px"}}
+            >
                 Gửi thông báo
             </button>
         </div>
     )
+}
+
+function isCompleteRoute({colName, vecName, MCP}) {
+    const [selectMCP, maxMCP] = MCP.split('/')
+    return colName.toLowerCase() !== 'chua phan cong' && vecName.toLowerCase() !== 'chua phan cong' && selectMCP===maxMCP
 }
 
 
